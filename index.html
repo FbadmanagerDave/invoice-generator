@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice Generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.png" />
+</head>
+<body>
+  <div id="invoice-generator">
+    <h2>Your Company Name</h2>
+    <input type="text" placeholder="Client Name" class="client-input" />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="invoice-items">
+        <tr>
+          <td contenteditable="true">Service A</td>
+          <td contenteditable="true">1</td>
+          <td contenteditable="true">100</td>
+          <td>$100.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>Total: <span id="invoice-total">$100.00</span></strong></p>
+
+    <div id="controls">
+      <button id="add-row">Add Item</button>
+      <button id="download-btn">Download Invoice</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
