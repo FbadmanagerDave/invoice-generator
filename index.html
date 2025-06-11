@@ -7,75 +7,81 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="invoice-generator">
-
-    <!-- Header -->
-    <div class="invoice-header">
-      <div class="invoice-title">INVOICE</div>
-      <div class="company-info">
-        <label for="company-details">Your Company Name</label>
-        <textarea id="company-details" placeholder="Your address, email, phone"></textarea>
+  <div class="invoice-container">
+    <!-- Header: Company Info + Invoice Meta -->
+    <header class="invoice-header">
+      <div class="company-details" contenteditable="true">
+        <h2>Your Company</h2>
+        <p>Your Street Address<br>Your City, ZIP<br>Phone | Email</p>
       </div>
-    </div>
-
-    <!-- Bill To & Invoice Info -->
-    <div class="invoice-meta">
-      <div class="client-info">
-        <label for="client-details">Bill To:</label>
-        <textarea id="client-details" placeholder="Client name, address, email"></textarea>
+      <div class="invoice-meta">
+        <div>
+          <label>Invoice #</label>
+          <input type="text" id="invoice-number" value="001" />
+        </div>
+        <div>
+          <label>Date</label>
+          <input type="date" id="invoice-date" />
+        </div>
+        <div>
+          <label>Currency</label>
+          <select id="currency">
+            <option value="$" selected>USD ($)</option>
+            <option value="€">EUR (€)</option>
+            <option value="₹">INR (₹)</option>
+            <option value="£">GBP (£)</option>
+          </select>
+        </div>
       </div>
-      <div class="invoice-info">
-        <label for="invoice-number">Invoice #:</label>
-        <input type="text" id="invoice-number" value="001" />
+    </header>
 
-        <label for="invoice-date">Date:</label>
-        <input type="date" id="invoice-date" />
-
-        <label for="currency">Currency:</label>
-        <select id="currency">
-          <option value="$" selected>USD ($)</option>
-          <option value="€">EUR (€)</option>
-          <option value="₹">INR (₹)</option>
-          <option value="£">GBP (£)</option>
-        </select>
+    <!-- Bill To & From -->
+    <section class="invoice-addresses">
+      <div>
+        <label>Bill From</label>
+        <textarea id="bill-from" placeholder="Your Name or Business"></textarea>
       </div>
-    </div>
+      <div>
+        <label>Bill To</label>
+        <textarea id="bill-to" placeholder="Client Name or Business"></textarea>
+      </div>
+    </section>
 
     <!-- Line Items -->
-    <div class="line-items">
+    <section class="invoice-items">
       <table>
         <thead>
           <tr>
             <th>Description</th>
             <th>Qty</th>
-            <th>Price</th>
-            <th>Total</th>
+            <th>Rate</th>
+            <th>Line Total</th>
           </tr>
         </thead>
-        <tbody id="invoice-items">
+        <tbody id="invoice-rows">
           <tr>
-            <td contenteditable="true">Service A</td>
+            <td contenteditable="true">Item Description</td>
             <td contenteditable="true">1</td>
             <td contenteditable="true">100</td>
-            <td>$100.00</td>
+            <td class="line-total">$100.00</td>
           </tr>
         </tbody>
       </table>
-      <button id="add-row">+ Add Item</button>
-    </div>
+      <button id="add-row">+ Add Line</button>
+    </section>
 
-    <!-- Notes + Summary -->
-    <div class="invoice-summary">
-      <div class="notes">
-        <label for="invoice-notes">Notes:</label>
-        <textarea id="invoice-notes" placeholder="Thank you for your business. Payment due in 30 days."></textarea>
+    <!-- Notes & Totals -->
+    <section class="invoice-summary">
+      <div class="invoice-notes">
+        <label>Notes</label>
+        <textarea id="notes" placeholder="Thank you for your business."></textarea>
       </div>
-      <div class="total-amount">
-        <h2>Total: <span id="invoice-total">$100.00</span></h2>
+      <div class="invoice-totals">
+        <div><span>Subtotal:</span> <span id="subtotal">$100.00</span></div>
+        <div><span>Total:</span> <span id="total">$100.00</span></div>
         <button id="download-btn">Download PDF</button>
       </div>
-    </div>
-
+    </section>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
