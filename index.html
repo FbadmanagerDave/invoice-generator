@@ -1,16 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Invoice Generator</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.png" />
-</head>
 <body>
   <div id="invoice-generator">
-    <h2>Your Company Name</h2>
-    <input type="text" placeholder="Client Name" class="client-input" />
+    <h2 contenteditable="true">Your Company Name</h2>
+    <textarea id="company-info" placeholder="Your address, phone, email"></textarea>
+
+    <div class="flex-row">
+      <div class="half">
+        <h4>Bill To:</h4>
+        <textarea id="client-info" placeholder="Client name, address, contact"></textarea>
+      </div>
+      <div class="half">
+        <label>Invoice #: <input type="text" id="invoice-number" value="001" /></label><br />
+        <label>Date: <input type="date" id="invoice-date" /></label><br />
+        <label>Currency:
+          <select id="currency">
+            <option value="$" selected>USD ($)</option>
+            <option value="€">EUR (€)</option>
+            <option value="₹">INR (₹)</option>
+            <option value="£">GBP (£)</option>
+          </select>
+        </label>
+      </div>
+    </div>
 
     <table>
       <thead>
@@ -33,6 +43,8 @@
 
     <p><strong>Total: <span id="invoice-total">$100.00</span></strong></p>
 
+    <textarea id="invoice-notes" placeholder="Additional notes or payment terms"></textarea>
+
     <div id="controls">
       <button id="add-row">Add Item</button>
       <button id="download-btn">Download Invoice</button>
@@ -43,4 +55,3 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
-</html>
