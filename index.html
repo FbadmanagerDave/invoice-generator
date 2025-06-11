@@ -1,35 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
   <div id="invoice-generator">
-    <header class="invoice-header">
-      <div>
-        <h1 contenteditable="true" class="invoice-title">INVOICE</h1>
-      </div>
+
+    <!-- Header -->
+    <div class="invoice-header">
+      <div class="invoice-title">INVOICE</div>
       <div class="company-info">
-        <h3 contenteditable="true">Your Company Name</h3>
-        <textarea id="company-details" placeholder="Your address, email, phone" rows="4"></textarea>
+        <label for="company-details">Your Company Name</label>
+        <textarea id="company-details" placeholder="Your address, email, phone"></textarea>
       </div>
-    </header>
+    </div>
 
-    <section class="invoice-meta">
-      <div class="meta-left">
-        <h4>Bill To:</h4>
-        <textarea id="client-details" placeholder="Client name, address, email" rows="4"></textarea>
+    <!-- Bill To & Invoice Info -->
+    <div class="invoice-meta">
+      <div class="client-info">
+        <label for="client-details">Bill To:</label>
+        <textarea id="client-details" placeholder="Client name, address, email"></textarea>
       </div>
-      <div class="meta-right">
-        <label>Invoice #: <input type="text" id="invoice-number" value="001" /></label>
-        <label>Date: <input type="date" id="invoice-date" /></label>
-        <label>Currency:
-          <select id="currency">
-            <option value="$" selected>USD ($)</option>
-            <option value="€">EUR (€)</option>
-            <option value="₹">INR (₹)</option>
-            <option value="£">GBP (£)</option>
-          </select>
-        </label>
-      </div>
-    </section>
+      <div class="invoice-info">
+        <label for="invoice-number">Invoice #:</label>
+        <input type="text" id="invoice-number" value="001" />
 
-    <section class="line-items">
+        <label for="invoice-date">Date:</label>
+        <input type="date" id="invoice-date" />
+
+        <label for="currency">Currency:</label>
+        <select id="currency">
+          <option value="$" selected>USD ($)</option>
+          <option value="€">EUR (€)</option>
+          <option value="₹">INR (₹)</option>
+          <option value="£">GBP (£)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Line Items -->
+    <div class="line-items">
       <table>
         <thead>
           <tr>
@@ -48,22 +61,25 @@
           </tr>
         </tbody>
       </table>
-      <button id="add-row" class="add-row-btn">+ Add Item</button>
-    </section>
+      <button id="add-row">+ Add Item</button>
+    </div>
 
-    <section class="invoice-summary">
+    <!-- Notes + Summary -->
+    <div class="invoice-summary">
       <div class="notes">
-        <h4>Notes</h4>
-        <textarea id="invoice-notes" placeholder="Thank you for your business. Payment due in 30 days." rows="4"></textarea>
+        <label for="invoice-notes">Notes:</label>
+        <textarea id="invoice-notes" placeholder="Thank you for your business. Payment due in 30 days."></textarea>
       </div>
       <div class="total-amount">
         <h2>Total: <span id="invoice-total">$100.00</span></h2>
         <button id="download-btn">Download PDF</button>
       </div>
-    </section>
+    </div>
+
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
 </body>
+</html>
