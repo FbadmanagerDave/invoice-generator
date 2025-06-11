@@ -1,16 +1,23 @@
 <body>
   <div id="invoice-generator">
-    <h2 contenteditable="true">Your Company Name</h2>
-    <textarea id="company-info" placeholder="Your address, phone, email"></textarea>
-
-    <div class="flex-row">
-      <div class="half">
-        <h4>Bill To:</h4>
-        <textarea id="client-info" placeholder="Client name, address, contact"></textarea>
+    <header class="invoice-header">
+      <div>
+        <h1 contenteditable="true" class="invoice-title">INVOICE</h1>
       </div>
-      <div class="half">
-        <label>Invoice #: <input type="text" id="invoice-number" value="001" /></label><br />
-        <label>Date: <input type="date" id="invoice-date" /></label><br />
+      <div class="company-info">
+        <h3 contenteditable="true">Your Company Name</h3>
+        <textarea id="company-details" placeholder="Your address, email, phone" rows="4"></textarea>
+      </div>
+    </header>
+
+    <section class="invoice-meta">
+      <div class="meta-left">
+        <h4>Bill To:</h4>
+        <textarea id="client-details" placeholder="Client name, address, email" rows="4"></textarea>
+      </div>
+      <div class="meta-right">
+        <label>Invoice #: <input type="text" id="invoice-number" value="001" /></label>
+        <label>Date: <input type="date" id="invoice-date" /></label>
         <label>Currency:
           <select id="currency">
             <option value="$" selected>USD ($)</option>
@@ -20,35 +27,40 @@
           </select>
         </label>
       </div>
-    </div>
+    </section>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Qty</th>
-          <th>Price</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody id="invoice-items">
-        <tr>
-          <td contenteditable="true">Service A</td>
-          <td contenteditable="true">1</td>
-          <td contenteditable="true">100</td>
-          <td>$100.00</td>
-        </tr>
-      </tbody>
-    </table>
+    <section class="line-items">
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="invoice-items">
+          <tr>
+            <td contenteditable="true">Service A</td>
+            <td contenteditable="true">1</td>
+            <td contenteditable="true">100</td>
+            <td>$100.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <button id="add-row" class="add-row-btn">+ Add Item</button>
+    </section>
 
-    <p><strong>Total: <span id="invoice-total">$100.00</span></strong></p>
-
-    <textarea id="invoice-notes" placeholder="Additional notes or payment terms"></textarea>
-
-    <div id="controls">
-      <button id="add-row">Add Item</button>
-      <button id="download-btn">Download Invoice</button>
-    </div>
+    <section class="invoice-summary">
+      <div class="notes">
+        <h4>Notes</h4>
+        <textarea id="invoice-notes" placeholder="Thank you for your business. Payment due in 30 days." rows="4"></textarea>
+      </div>
+      <div class="total-amount">
+        <h2>Total: <span id="invoice-total">$100.00</span></h2>
+        <button id="download-btn">Download PDF</button>
+      </div>
+    </section>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
