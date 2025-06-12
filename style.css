@@ -1,8 +1,8 @@
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
   margin: 0;
-  padding: 40px 20px;
+  padding: 20px;
   color: #333;
 }
 
@@ -11,41 +11,44 @@ body {
   max-width: 900px;
   margin: auto;
   padding: 40px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .invoice-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 20px;
+  flex-wrap: wrap;
   margin-bottom: 30px;
 }
 
 .company-details {
-  max-width: 50%;
+  max-width: 60%;
 }
 .company-details h2 {
   margin: 0 0 10px;
 }
 .company-details p {
   margin: 0;
-  line-height: 1.6;
+  white-space: pre-line;
 }
 
+.invoice-meta {
+  text-align: right;
+}
+.invoice-meta div {
+  margin-bottom: 10px;
+}
 .invoice-meta label {
   display: block;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 3px;
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 .invoice-meta input,
 .invoice-meta select {
+  padding: 6px 10px;
   width: 150px;
-  padding: 6px 8px;
   font-size: 14px;
-  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -53,107 +56,154 @@ body {
 .invoice-addresses {
   display: flex;
   justify-content: space-between;
+  gap: 40px;
   margin-bottom: 30px;
 }
 .invoice-addresses div {
-  width: 48%;
+  flex: 1;
+}
+.invoice-addresses label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 .invoice-addresses textarea {
   width: 100%;
   height: 80px;
-  padding: 10px;
+  padding: 8px;
+  resize: vertical;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  resize: vertical;
-}
-.invoice-addresses label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
 }
 
 .invoice-items table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
-.invoice-items th,
-.invoice-items td {
-  text-align: left;
+.invoice-items th, .invoice-items td {
+  border: 1px solid #ddd;
   padding: 12px;
-  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
 }
 .invoice-items th {
-  background: #f9f9f9;
-  font-weight: bold;
+  background-color: #f0f0f0;
 }
 .invoice-items td[contenteditable="true"] {
-  background: #fefefe;
-  cursor: text;
+  background: #fcfcfc;
 }
-.line-total {
-  white-space: nowrap;
-}
-
-#add-row {
+.invoice-items button {
   background: #007bff;
   color: white;
+  padding: 8px 12px;
   border: none;
-  padding: 10px 16px;
-  font-size: 14px;
   border-radius: 4px;
+  font-size: 14px;
   cursor: pointer;
-  margin-top: 10px;
 }
-#add-row:hover {
+.invoice-items button:hover {
   background: #0056b3;
 }
 
 .invoice-summary {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
   margin-top: 30px;
 }
 .invoice-notes {
-  width: 55%;
+  flex: 1;
+}
+.invoice-notes label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 .invoice-notes textarea {
   width: 100%;
   height: 100px;
-  font-size: 14px;
   padding: 10px;
+  resize: vertical;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  resize: vertical;
-}
-.invoice-notes label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
 }
 
 .invoice-totals {
+  flex: 1;
   text-align: right;
 }
 .invoice-totals div {
   margin-bottom: 10px;
   font-size: 16px;
 }
-.invoice-totals span:last-child {
-  font-weight: bold;
-  margin-left: 10px;
+.invoice-totals span {
+  display: inline-block;
+  min-width: 120px;
 }
-#download-btn {
+.invoice-totals input[type="number"] {
+  width: 100px;
+  padding: 6px 8px;
+  font-size: 14px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.invoice-totals label {
+  font-size: 14px;
+  margin-right: 5px;
+}
+.invoice-totals button {
   background: #28a745;
   color: white;
-  padding: 10px 20px;
-  font-size: 15px;
+  padding: 10px 18px;
   border: none;
+  font-size: 16px;
   border-radius: 4px;
+  margin-top: 10px;
   cursor: pointer;
 }
-#download-btn:hover {
-  background: #218838;
+.invoice-totals button:hover {
+  background: #1e7e34;
+}
+
+/* Logo Upload Section */
+.logo-section {
+  margin-bottom: 30px;
+  text-align: center;
+}
+#logo-upload {
+  display: block;
+  margin: 0 auto 10px;
+}
+#invoice-logo {
+  max-height: 80px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .invoice-header,
+  .invoice-summary {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .invoice-meta {
+    text-align: left;
+  }
+
+  .invoice-addresses {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .invoice-totals {
+    text-align: left;
+  }
 }
