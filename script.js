@@ -15,8 +15,15 @@ function updateTotals() {
     row.querySelector(".line-total").innerText = formatCurrency(lineTotal, currency);
   });
 
+  const taxRate = parseFloat(document.getElementById("tax-rate").value) || 0;
+  const discountRate = parseFloat(document.getElementById("discount-rate").value) || 0;
+
+  const taxAmount = subtotal * (taxRate / 100);
+  const discountAmount = subtotal * (discountRate / 100);
+  const total = subtotal + taxAmount - discountAmount;
+
   document.getElementById("subtotal").innerText = formatCurrency(subtotal, currency);
-  document.getElementById("total").innerText = formatCurrency(subtotal, currency);
+  document.getElementById("total").innerText = formatCurrency(total, currency);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -37,6 +44,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("invoice-rows").addEventListener("input", updateTotals);
   document.getElementById("currency").addEventListener("change", updateTotals);
+  document.getElementById("tax-rate").addEventListener("input", updateTotals);
+  document.getElementById("discount-rate").addEventListener("input", updateTotals);
+
+  // Logo upload preview
+  document.getElementById("logo-upload").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const logo = document.getElementById("invoice-logo");
+        logo.src = reader.result;
+        logo.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
   updateTotals();
 
