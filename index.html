@@ -8,19 +8,20 @@
 </head>
 <body>
   <div class="invoice-container">
-    <!-- Logo Upload -->
-    <div class="logo-upload">
-  <label for="logo-input" class="upload-label">Upload Logo</label>
-  <input type="file" id="logo-input" accept="image/*" />
-  <img id="logo-preview" src="" alt="Logo Preview" />
-</div>
-
-    <!-- Header: Company Info + Invoice Meta -->
+    <!-- Header: Logo + Company Info + Invoice Meta -->
     <header class="invoice-header">
-      <div class="company-details" contenteditable="true">
-        <h2>Your Company</h2>
-        <p>Your Street Address<br>Your City, ZIP<br>Phone | Email</p>
+      <div class="left-header">
+        <div class="logo-upload">
+          <label for="logo-input" class="upload-label">Upload Logo</label>
+          <input type="file" id="logo-input" accept="image/*" />
+          <img id="logo-preview" src="" alt="Logo Preview" />
+        </div>
+        <div class="company-details" contenteditable="true">
+          <h2>Your Company</h2>
+          <p>Your Street Address<br>Your City, ZIP<br>Phone | Email</p>
+        </div>
       </div>
+
       <div class="invoice-meta">
         <div>
           <label>Invoice #</label>
@@ -99,6 +100,7 @@
     </section>
   </div>
 
+  <!-- JS Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
