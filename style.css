@@ -14,6 +14,29 @@ body {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
+/* === LOGO UPLOAD SECTION === */
+.logo-upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.logo-upload-wrapper input[type="file"] {
+  font-size: 13px;
+  margin-bottom: 8px;
+  padding: 4px;
+}
+#invoice-logo {
+  max-height: 80px;
+  max-width: 200px;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  padding: 5px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+/* === HEADER === */
 .invoice-header {
   display: flex;
   justify-content: space-between;
@@ -170,22 +193,7 @@ body {
   background: #1e7e34;
 }
 
-/* Logo Upload Section */
-.logo-section {
-  margin-bottom: 30px;
-  text-align: center;
-}
-#logo-upload {
-  display: block;
-  margin: 0 auto 10px;
-}
-#invoice-logo {
-  max-height: 80px;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Responsive Tweaks */
+/* === Responsive Tweaks === */
 @media (max-width: 768px) {
   .invoice-header,
   .invoice-summary {
