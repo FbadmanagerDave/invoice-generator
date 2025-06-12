@@ -9,10 +9,11 @@
 <body>
   <div class="invoice-container">
     <!-- Logo Upload -->
-    <div class="logo-section">
-      <input type="file" id="logo-upload" accept="image/*" />
-      <img id="invoice-logo" src="" alt="Company Logo" style="max-height: 80px; display: none; margin-top: 10px;" />
-    </div>
+    <div class="logo-upload">
+  <label for="logo-input" class="upload-label">Upload Logo</label>
+  <input type="file" id="logo-input" accept="image/*" />
+  <img id="logo-preview" src="" alt="Logo Preview" />
+</div>
 
     <!-- Header: Company Info + Invoice Meta -->
     <header class="invoice-header">
