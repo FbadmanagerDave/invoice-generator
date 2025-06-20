@@ -26,7 +26,7 @@ body {
   margin-bottom: 8px;
   padding: 4px;
 }
-#invoice-logo {
+#logo-preview {
   max-height: 80px;
   max-width: 200px;
   object-fit: contain;
@@ -159,27 +159,29 @@ body {
   flex: 1;
   text-align: right;
 }
-.invoice-totals div {
-  margin-bottom: 10px;
-  font-size: 16px;
+.invoice-totals table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
-.invoice-totals span {
-  display: inline-block;
-  min-width: 120px;
+.invoice-totals td {
+  padding: 5px;
+  border: 1px solid #ddd;
+  text-align: right;
+}
+.invoice-totals td:first-child {
+  text-align: left;
+  font-weight: bold;
 }
 .invoice-totals input[type="number"] {
   width: 100px;
   padding: 6px 8px;
   font-size: 14px;
-  margin-left: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.invoice-totals label {
-  font-size: 14px;
-  margin-right: 5px;
-}
-.invoice-totals button {
+
+#download-btn {
   background: #28a745;
   color: white;
   padding: 10px 18px;
@@ -189,7 +191,7 @@ body {
   margin-top: 10px;
   cursor: pointer;
 }
-.invoice-totals button:hover {
+#download-btn:hover {
   background: #1e7e34;
 }
 
