@@ -12,8 +12,8 @@
     <header class="invoice-header">
       <div class="left-header">
         <div class="logo-upload">
-          <label for="logo-input" class="upload-label">Upload Logo</label>
-          <input type="file" id="logo-input" accept="image/*" />
+          <label for="logo-input" class="upload-label no-print">Upload Logo</label>
+          <input type="file" id="logo-input" accept="image/*" class="no-print" />
           <img id="logo-preview" src="" alt="Logo Preview" />
         </div>
         <div class="company-details" contenteditable="true">
@@ -84,7 +84,7 @@
         <label>Notes</label>
         <textarea id="notes" placeholder="Thank you for your business."></textarea>
       </div>
-      <div class="invoice-totals">
+      <div class="invoice-totals totals-box">
         <div><span>Subtotal:</span> <span id="subtotal">$100.00</span></div>
         <div>
           <label>Tax (%)</label>
@@ -95,7 +95,7 @@
           <input type="number" id="discount-rate" value="0" min="0" max="100" />
         </div>
         <div><span>Total:</span> <span id="total">$100.00</span></div>
-        <button id="download-btn">Download PDF</button>
+        <button id="download-btn" class="no-print">Download PDF</button>
       </div>
     </section>
   </div>
