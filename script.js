@@ -27,9 +27,11 @@ function updateTotals() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Set current date
   const invoiceDate = document.getElementById("invoice-date");
   invoiceDate.value = new Date().toISOString().split("T")[0];
 
+  // Add row
   document.getElementById("add-row").addEventListener("click", () => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -42,12 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTotals();
   });
 
+  // Update totals on input
   document.getElementById("invoice-rows").addEventListener("input", updateTotals);
   document.getElementById("currency").addEventListener("change", updateTotals);
   document.getElementById("tax-rate").addEventListener("input", updateTotals);
   document.getElementById("discount-rate").addEventListener("input", updateTotals);
 
-  // ✅ Logo upload preview
+  // Logo upload preview
   document.getElementById("logo-input").addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -56,17 +59,23 @@ document.addEventListener("DOMContentLoaded", () => {
         const logo = document.getElementById("logo-preview");
         logo.src = reader.result;
         logo.style.display = "block";
+        logo.style.maxWidth = "150px";
+        logo.style.maxHeight = "80px";
+        logo.style.objectFit = "contain";
       };
       reader.readAsDataURL(file);
     }
   });
 
-  updateTotals();
-
+  // PDF Download
   document.getElementById("download-btn").addEventListener("click", () => {
-    const container = document.querySelector(".invoice-container");
+    const printArea = document.querySelector(".invoice-container");
 
-    html2canvas(container, { scale: 2 }).then(canvas => {
+    html2canvas(printArea, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    }).then(canvas => {
       const imgData = canvas.toDataURL("image/png");
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF("p", "pt", "a4");
@@ -75,7 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 20, 20, pdfWidth - 40, pdfHeight);
-      pdf.save(`invoice-${document.getElementById("invoice-number").value || '001'}.pdf`);
+      const fileName = `invoice-${document.getElementById("invoice-number").value || '001'}.pdf`;
+      pdf.save(fileName);
     });
   });
+
+  updateTotals();
 });
