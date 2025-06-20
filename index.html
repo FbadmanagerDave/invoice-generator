@@ -11,16 +11,11 @@
     <!-- Header: Logo + Company Info + Invoice Meta -->
     <header class="invoice-header">
       <div class="left-header">
-        <!-- LOGO UPLOAD BLOCK -->
-        <div class="logo-upload-wrapper">
+        <div class="logo-upload">
+          <label for="logo-input" class="upload-label">Upload Logo</label>
           <input type="file" id="logo-input" accept="image/*" />
-          <label for="logo-input" class="upload-label">📁 Upload Logo</label>
-          <div class="logo-preview-container">
-            <img id="logo-preview" src="" alt="Logo Preview" />
-          </div>
+          <img id="logo-preview" src="" alt="Logo Preview" />
         </div>
-
-        <!-- COMPANY INFO -->
         <div class="company-details" contenteditable="true">
           <h2>Your Company</h2>
           <p>Your Street Address<br>Your City, ZIP<br>Phone | Email</p>
