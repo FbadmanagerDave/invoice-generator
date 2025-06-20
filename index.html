@@ -84,19 +84,25 @@
         <label>Notes</label>
         <textarea id="notes" placeholder="Thank you for your business."></textarea>
       </div>
-      <div class="invoice-totals totals-box">
-        <div><span>Subtotal:</span> <span id="subtotal">$100.00</span></div>
-        <div>
-          <label>Tax (%)</label>
-          <input type="number" id="tax-rate" value="0" min="0" max="100" />
-        </div>
-        <div>
-          <label>Discount (%)</label>
-          <input type="number" id="discount-rate" value="0" min="0" max="100" />
-        </div>
-        <div><span>Total:</span> <span id="total">$100.00</span></div>
-        <button id="download-btn" class="no-print">Download PDF</button>
-      </div>
+      <table class="invoice-totals">
+        <tr>
+          <td>Subtotal:</td>
+          <td id="subtotal">$100.00</td>
+        </tr>
+        <tr>
+          <td>Tax (%):</td>
+          <td><input type="number" id="tax-rate" value="0" min="0" max="100" /></td>
+        </tr>
+        <tr>
+          <td>Discount (%):</td>
+          <td><input type="number" id="discount-rate" value="0" min="0" max="100" /></td>
+        </tr>
+        <tr>
+          <td>Total:</td>
+          <td id="total">$100.00</td>
+        </tr>
+      </table>
+      <button id="download-btn" class="no-print">Download PDF</button>
     </section>
   </div>
 
