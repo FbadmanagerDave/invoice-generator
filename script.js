@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const printArea = document.querySelector(".invoice-container");
     const canvas = await html2canvas(printArea, {
-      scale: 3,
+      scale: 4,
       useCORS: true,
       backgroundColor: "#ffffff",
       scrollY: -window.scrollY
