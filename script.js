@@ -7,12 +7,11 @@ function updateTotals() {
   const currency = document.getElementById("currency").value;
   let subtotal = 0;
 
-  rows.forEach((row) => {
+  rows.forEach(row => {
     const qtyText = row.cells[1].innerText.trim();
     const rateText = row.cells[2].innerText.trim();
     const qty = parseFloat(qtyText);
     const rate = parseFloat(rateText);
-
     if (!isNaN(qty) && !isNaN(rate)) {
       const lineTotal = qty * rate;
       subtotal += lineTotal;
@@ -22,8 +21,10 @@ function updateTotals() {
     }
   });
 
-  const taxRate = parseFloat(document.getElementById("tax-rate").value) || 0;
-  const discountRate = parseFloat(document.getElementById("discount-rate").value) || 0;
+  const taxRateText = document.getElementById("tax-rate").value.trim();
+  const discountRateText = document.getElementById("discount-rate").value.trim();
+  const taxRate = parseFloat(taxRateText) || 0;
+  const discountRate = parseFloat(discountRateText) || 0;
 
   const taxAmount = subtotal * (taxRate / 100);
   const discountAmount = subtotal * (discountRate / 100);
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTotals();
   });
 
-  // Bind currency/tax/discount input events
+  // Update totals on input
   document.getElementById("invoice-rows").addEventListener("input", updateTotals);
   document.getElementById("currency").addEventListener("change", updateTotals);
   document.getElementById("tax-rate").addEventListener("input", updateTotals);
@@ -66,6 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const logo = document.getElementById("logo-preview");
         logo.src = reader.result;
         logo.style.display = "block";
+        logo.style.maxWidth = "150px";
+        logo.style.maxHeight = "80px";
+        logo.style.objectFit = "contain";
       };
       reader.readAsDataURL(file);
     }
@@ -73,17 +77,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // PDF Download
   document.getElementById("download-btn").addEventListener("click", () => {
-    const printArea = document.querySelector(".invoice-container");
+    const invoiceContainer = document.querySelector(".invoice-container");
 
-    // Temporarily disable focus outlines or other UI glitches during render
-    document.activeElement.blur();
+    // Clone DOM without no-print elements
+    const clone = invoiceContainer.cloneNode(true);
+    clone.querySelectorAll(".no-print").forEach(el => el.remove());
 
-    html2canvas(printArea, {
-      scale: 3,
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "absolute";
+    wrapper.style.left = "-9999px";
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    html2canvas(clone, {
+      scale: 2,
       useCORS: true,
-      backgroundColor: "#ffffff",
-      scrollY: -window.scrollY
-    }).then((canvas) => {
+      backgroundColor: "#ffffff"
+    }).then(canvas => {
       const imgData = canvas.toDataURL("image/png");
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF("p", "pt", "a4");
@@ -94,6 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
       pdf.addImage(imgData, "PNG", 20, 20, pdfWidth - 40, pdfHeight);
       const fileName = `invoice-${document.getElementById("invoice-number").value || '001'}.pdf`;
       pdf.save(fileName);
+
+      document.body.removeChild(wrapper);
     });
   });
 
