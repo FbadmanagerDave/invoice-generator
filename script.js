@@ -25,6 +25,39 @@ function updateTotals() {
   document.getElementById("total").innerText = formatCurrency(total, currency);
 }
 
+document.getElementById('download-btn').addEventListener('click', async () => {
+  // Temporarily hide .no-print elements
+  const hiddenElements = document.querySelectorAll('.no-print');
+  hiddenElements.forEach(el => el.style.display = 'none');
+
+  const invoice = document.querySelector('.invoice-container');
+
+  const canvas = await html2canvas(invoice, {
+    scale: 2,  // Increase scale for sharpness
+    useCORS: true,
+  });
+
+  const imgData = canvas.toDataURL('image/png');
+  const pdf = new jspdf.jsPDF('p', 'pt', 'a4');
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const ratio = Math.min(pageWidth / canvas.width, pageHeight / canvas.height);
+
+  const imgWidth = canvas.width * ratio;
+  const imgHeight = canvas.height * ratio;
+
+  const x = (pageWidth - imgWidth) / 2;
+  const y = 20;
+
+  pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+  pdf.save(`invoice-${Date.now()}.pdf`);
+
+  // Restore .no-print elements
+  hiddenElements.forEach(el => el.style.display = '');
+});
+
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("invoice-date").value = new Date().toISOString().split("T")[0];
 
