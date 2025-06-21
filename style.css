@@ -15,18 +15,17 @@ body {
 }
 
 /* === LOGO UPLOAD SECTION === */
-.logo-upload-wrapper {
+.logo-upload {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: 10px;
 }
-.logo-upload-wrapper input[type="file"] {
+.logo-upload input[type="file"] {
   font-size: 13px;
-  margin-bottom: 8px;
-  padding: 4px;
+  margin-top: 4px;
 }
-#logo-preview {
+.logo-preview {
   max-height: 80px;
   max-width: 200px;
   object-fit: contain;
@@ -34,28 +33,21 @@ body {
   padding: 5px;
   background: #fff;
   border-radius: 4px;
+  margin-top: 10px;
 }
 
 /* === HEADER === */
 .invoice-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   flex-wrap: wrap;
   margin-bottom: 30px;
+  gap: 20px;
 }
-
-.company-details {
-  max-width: 60%;
+.left-header {
+  flex: 1;
+  min-width: 250px;
 }
-.company-details h2 {
-  margin: 0 0 10px;
-}
-.company-details p {
-  margin: 0;
-  white-space: pre-line;
-}
-
 .invoice-meta {
   text-align: right;
 }
@@ -70,16 +62,25 @@ body {
 .invoice-meta input,
 .invoice-meta select {
   padding: 6px 10px;
-  width: 150px;
+  width: 160px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
+.company-details h2 {
+  margin: 0 0 10px;
+}
+.company-details p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* === ADDRESS SECTION === */
 .invoice-addresses {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  gap: 30px;
   margin-bottom: 30px;
 }
 .invoice-addresses div {
@@ -100,6 +101,7 @@ body {
   border-radius: 4px;
 }
 
+/* === ITEMS TABLE === */
 .invoice-items table {
   width: 100%;
   border-collapse: collapse;
@@ -117,7 +119,7 @@ body {
 .invoice-items td[contenteditable="true"] {
   background: #fcfcfc;
 }
-.invoice-items button {
+#add-row {
   background: #007bff;
   color: white;
   padding: 8px 12px;
@@ -125,16 +127,18 @@ body {
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
+  margin-top: 8px;
 }
-.invoice-items button:hover {
+#add-row:hover {
   background: #0056b3;
 }
 
+/* === NOTES AND TOTALS === */
 .invoice-summary {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 30px;
   margin-top: 30px;
 }
 .invoice-notes {
@@ -155,32 +159,40 @@ body {
   border-radius: 4px;
 }
 
-.invoice-totals {
+/* === TOTALS BOX === */
+.invoice-totals-box {
   flex: 1;
-  text-align: right;
-}
-.invoice-totals table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-.invoice-totals td {
-  padding: 5px;
   border: 1px solid #ddd;
-  text-align: right;
+  border-radius: 6px;
+  padding: 15px;
+  background: #fdfdfd;
+  min-width: 260px;
+  box-sizing: border-box;
 }
-.invoice-totals td:first-child {
-  text-align: left;
-  font-weight: bold;
+.invoice-totals-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
-.invoice-totals input[type="number"] {
+.invoice-totals-row input {
   width: 100px;
   padding: 6px 8px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.invoice-totals-row label {
+  flex: 1;
+}
+.invoice-totals-row.total {
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  padding-top: 8px;
+  margin-top: 12px;
+}
 
+/* === BUTTON === */
 #download-btn {
   background: #28a745;
   color: white;
@@ -188,45 +200,30 @@ body {
   border: none;
   font-size: 16px;
   border-radius: 4px;
-  margin-top: 10px;
+  margin-top: 15px;
   cursor: pointer;
 }
 #download-btn:hover {
   background: #1e7e34;
 }
 
-/* === Responsive Tweaks === */
+/* === Responsive === */
 @media (max-width: 768px) {
   .invoice-header,
-  .invoice-summary {
+  .invoice-summary,
+  .invoice-addresses {
     flex-direction: column;
-    align-items: stretch;
     text-align: left;
   }
-
-  /* === FIX INPUT CROPPING === */
-input[type="number"],
-input[type="text"],
-select {
-  box-sizing: border-box;
-}
-
-  
   .invoice-meta {
     text-align: left;
   }
-
-  .invoice-addresses {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .invoice-totals {
-    text-align: left;
+  .invoice-totals-box {
+    margin-top: 20px;
   }
 }
 
-/* === HIDE ELEMENTS DURING PDF EXPORT === */
+/* === PRINT CLEANUP === */
 @media print {
   .no-print {
     display: none !important;
