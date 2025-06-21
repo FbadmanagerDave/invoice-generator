@@ -8,24 +8,15 @@ function updateTotals() {
   let subtotal = 0;
 
   rows.forEach(row => {
-    const qtyText = row.cells[1].innerText.trim();
-    const rateText = row.cells[2].innerText.trim();
-    const qty = parseFloat(qtyText);
-    const rate = parseFloat(rateText);
-    if (!isNaN(qty) && !isNaN(rate)) {
-      const lineTotal = qty * rate;
-      subtotal += lineTotal;
-      row.querySelector(".line-total").innerText = formatCurrency(lineTotal, currency);
-    } else {
-      row.querySelector(".line-total").innerText = formatCurrency(0, currency);
-    }
+    const qty = parseFloat(row.cells[1].innerText.trim()) || 0;
+    const rate = parseFloat(row.cells[2].innerText.trim()) || 0;
+    const lineTotal = qty * rate;
+    subtotal += lineTotal;
+    row.querySelector(".line-total").innerText = formatCurrency(lineTotal, currency);
   });
 
-  const taxRateText = document.getElementById("tax-rate").value.trim();
-  const discountRateText = document.getElementById("discount-rate").value.trim();
-  const taxRate = parseFloat(taxRateText) || 0;
-  const discountRate = parseFloat(discountRateText) || 0;
-
+  const taxRate = parseFloat(document.getElementById("tax-rate").value.trim()) || 0;
+  const discountRate = parseFloat(document.getElementById("discount-rate").value.trim()) || 0;
   const taxAmount = subtotal * (taxRate / 100);
   const discountAmount = subtotal * (discountRate / 100);
   const total = subtotal + taxAmount - discountAmount;
@@ -35,11 +26,8 @@ function updateTotals() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Set current date
-  const invoiceDate = document.getElementById("invoice-date");
-  invoiceDate.value = new Date().toISOString().split("T")[0];
+  document.getElementById("invoice-date").value = new Date().toISOString().split("T")[0];
 
-  // Add row
   document.getElementById("add-row").addEventListener("click", () => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -52,13 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTotals();
   });
 
-  // Update totals on input
   document.getElementById("invoice-rows").addEventListener("input", updateTotals);
   document.getElementById("currency").addEventListener("change", updateTotals);
   document.getElementById("tax-rate").addEventListener("input", updateTotals);
   document.getElementById("discount-rate").addEventListener("input", updateTotals);
 
-  // Logo upload preview
   document.getElementById("logo-input").addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -67,32 +53,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const logo = document.getElementById("logo-preview");
         logo.src = reader.result;
         logo.style.display = "block";
-        logo.style.maxWidth = "150px";
-        logo.style.maxHeight = "80px";
-        logo.style.objectFit = "contain";
       };
       reader.readAsDataURL(file);
     }
   });
 
-  // PDF Download
   document.getElementById("download-btn").addEventListener("click", () => {
-    const invoiceContainer = document.querySelector(".invoice-container");
+    const printArea = document.querySelector(".invoice-container");
 
-    // Clone DOM without no-print elements
-    const clone = invoiceContainer.cloneNode(true);
-    clone.querySelectorAll(".no-print").forEach(el => el.remove());
-
-    const wrapper = document.createElement("div");
-    wrapper.style.position = "absolute";
-    wrapper.style.left = "-9999px";
-    wrapper.appendChild(clone);
-    document.body.appendChild(wrapper);
-
-    html2canvas(clone, {
-      scale: 2,
+    html2canvas(printArea, {
+      scale: 3,
       useCORS: true,
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
+      scrollY: -window.scrollY
     }).then(canvas => {
       const imgData = canvas.toDataURL("image/png");
       const { jsPDF } = window.jspdf;
@@ -102,10 +75,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 20, 20, pdfWidth - 40, pdfHeight);
-      const fileName = `invoice-${document.getElementById("invoice-number").value || '001'}.pdf`;
-      pdf.save(fileName);
-
-      document.body.removeChild(wrapper);
+      const filename = `invoice-${document.getElementById("invoice-number").value || "001"}.pdf`;
+      pdf.save(filename);
     });
   });
 
