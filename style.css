@@ -61,11 +61,15 @@ body {
 }
 .invoice-meta input,
 .invoice-meta select {
-  padding: 6px 10px;
-  width: 160px;
-  font-size: 14px;
+  padding: 10px 12px;
+  height: 42px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
+  width: 160px;
+  background-color: white;
+  color: black;
 }
 
 .company-details h2 {
@@ -94,11 +98,12 @@ body {
 .invoice-addresses textarea {
   width: 100%;
   height: 80px;
-  padding: 8px;
+  padding: 10px 12px;
   resize: vertical;
-  font-size: 14px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 /* === ITEMS TABLE === */
@@ -107,7 +112,8 @@ body {
   border-collapse: collapse;
   margin-bottom: 15px;
 }
-.invoice-items th, .invoice-items td {
+.invoice-items th,
+.invoice-items td {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: left;
@@ -122,12 +128,12 @@ body {
 #add-row {
   background: #007bff;
   color: white;
-  padding: 8px 12px;
+  padding: 10px 14px;
   border: none;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 #add-row:hover {
   background: #0056b3;
@@ -152,11 +158,12 @@ body {
 .invoice-notes textarea {
   width: 100%;
   height: 100px;
-  padding: 10px;
+  padding: 10px 12px;
   resize: vertical;
-  font-size: 14px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 /* === TOTALS BOX === */
@@ -177,10 +184,11 @@ body {
 }
 .invoice-totals-row input {
   width: 100px;
-  padding: 6px 8px;
-  font-size: 14px;
+  padding: 10px 12px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 .invoice-totals-row label {
   flex: 1;
@@ -196,7 +204,7 @@ body {
 #download-btn {
   background: #28a745;
   color: white;
-  padding: 10px 18px;
+  padding: 12px 20px;
   border: none;
   font-size: 16px;
   border-radius: 4px;
