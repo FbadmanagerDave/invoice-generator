@@ -26,10 +26,8 @@ function updateTotals() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Set today's date
   document.getElementById("invoice-date").value = new Date().toISOString().split("T")[0];
 
-  // Add new row
   document.getElementById("add-row").addEventListener("click", () => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -42,13 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTotals();
   });
 
-  // Update when inputs change
   document.getElementById("invoice-rows").addEventListener("input", updateTotals);
   document.getElementById("currency").addEventListener("change", updateTotals);
   document.getElementById("tax-rate").addEventListener("input", updateTotals);
   document.getElementById("discount-rate").addEventListener("input", updateTotals);
 
-  // Logo upload
   document.getElementById("logo-input").addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -62,13 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Download as PDF
   document.getElementById("download-btn").addEventListener("click", async () => {
     const hiddenElements = document.querySelectorAll(".no-print");
-    hiddenElements.forEach(el => el.style.display = "none");
+
+    // 1. Hide elements
+    hiddenElements.forEach(el => {
+      el.dataset.originalDisplay = el.style.display;
+      el.style.display = "none";
+    });
+
+    // 2. Wait for DOM to settle
+    await new Promise(resolve => setTimeout(resolve, 300));
 
     const printArea = document.querySelector(".invoice-container");
-
     const canvas = await html2canvas(printArea, {
       scale: 3,
       useCORS: true,
@@ -87,7 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const filename = `invoice-${document.getElementById("invoice-number").value || "001"}.pdf`;
     pdf.save(filename);
 
-    hiddenElements.forEach(el => el.style.display = "");
+    // 3. Restore visibility
+    hiddenElements.forEach(el => {
+      el.style.display = el.dataset.originalDisplay || "";
+    });
   });
 
   updateTotals();
