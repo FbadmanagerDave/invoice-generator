@@ -7,11 +7,12 @@ function updateTotals() {
   const currency = document.getElementById("currency").value;
   let subtotal = 0;
 
-  rows.forEach(row => {
+  rows.forEach((row) => {
     const qtyText = row.cells[1].innerText.trim();
     const rateText = row.cells[2].innerText.trim();
     const qty = parseFloat(qtyText);
     const rate = parseFloat(rateText);
+
     if (!isNaN(qty) && !isNaN(rate)) {
       const lineTotal = qty * rate;
       subtotal += lineTotal;
@@ -21,8 +22,8 @@ function updateTotals() {
     }
   });
 
-  const taxRate = parseFloat(document.getElementById("tax-rate").value.trim()) || 0;
-  const discountRate = parseFloat(document.getElementById("discount-rate").value.trim()) || 0;
+  const taxRate = parseFloat(document.getElementById("tax-rate").value) || 0;
+  const discountRate = parseFloat(document.getElementById("discount-rate").value) || 0;
 
   const taxAmount = subtotal * (taxRate / 100);
   const discountAmount = subtotal * (discountRate / 100);
@@ -33,9 +34,11 @@ function updateTotals() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Set current date
   const invoiceDate = document.getElementById("invoice-date");
   invoiceDate.value = new Date().toISOString().split("T")[0];
 
+  // Add row
   document.getElementById("add-row").addEventListener("click", () => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -48,12 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTotals();
   });
 
+  // Bind currency/tax/discount input events
   document.getElementById("invoice-rows").addEventListener("input", updateTotals);
   document.getElementById("currency").addEventListener("change", updateTotals);
   document.getElementById("tax-rate").addEventListener("input", updateTotals);
   document.getElementById("discount-rate").addEventListener("input", updateTotals);
 
-  // Logo preview
+  // Logo upload preview
   document.getElementById("logo-input").addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -62,32 +66,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const logo = document.getElementById("logo-preview");
         logo.src = reader.result;
         logo.style.display = "block";
-        logo.style.maxWidth = "150px";
-        logo.style.maxHeight = "80px";
-        logo.style.objectFit = "contain";
       };
       reader.readAsDataURL(file);
     }
   });
 
-  // Download PDF
+  // PDF Download
   document.getElementById("download-btn").addEventListener("click", () => {
-    const original = document.querySelector(".invoice-container");
-    const clone = original.cloneNode(true);
+    const printArea = document.querySelector(".invoice-container");
 
-    // Strip all .no-print elements from the clone
-    clone.querySelectorAll(".no-print").forEach(el => el.remove());
+    // Temporarily disable focus outlines or other UI glitches during render
+    document.activeElement.blur();
 
-    // Hide clone off-screen for rendering
-    clone.style.position = "absolute";
-    clone.style.left = "-9999px";
-    document.body.appendChild(clone);
-
-    html2canvas(clone, {
-      scale: 2,
+    html2canvas(printArea, {
+      scale: 3,
       useCORS: true,
-      backgroundColor: "#ffffff"
-    }).then(canvas => {
+      backgroundColor: "#ffffff",
+      scrollY: -window.scrollY
+    }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF("p", "pt", "a4");
@@ -96,9 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 20, 20, pdfWidth - 40, pdfHeight);
-      pdf.save(`invoice-${document.getElementById("invoice-number").value || '001'}.pdf`);
-
-      document.body.removeChild(clone); // Cleanup
+      const fileName = `invoice-${document.getElementById("invoice-number").value || '001'}.pdf`;
+      pdf.save(fileName);
     });
   });
 
