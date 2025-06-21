@@ -25,42 +25,11 @@ function updateTotals() {
   document.getElementById("total").innerText = formatCurrency(total, currency);
 }
 
-document.getElementById('download-btn').addEventListener('click', async () => {
-  // Temporarily hide .no-print elements
-  const hiddenElements = document.querySelectorAll('.no-print');
-  hiddenElements.forEach(el => el.style.display = 'none');
-
-  const invoice = document.querySelector('.invoice-container');
-
-  const canvas = await html2canvas(invoice, {
-    scale: 2,  // Increase scale for sharpness
-    useCORS: true,
-  });
-
-  const imgData = canvas.toDataURL('image/png');
-  const pdf = new jspdf.jsPDF('p', 'pt', 'a4');
-
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-  const ratio = Math.min(pageWidth / canvas.width, pageHeight / canvas.height);
-
-  const imgWidth = canvas.width * ratio;
-  const imgHeight = canvas.height * ratio;
-
-  const x = (pageWidth - imgWidth) / 2;
-  const y = 20;
-
-  pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-  pdf.save(`invoice-${Date.now()}.pdf`);
-
-  // Restore .no-print elements
-  hiddenElements.forEach(el => el.style.display = '');
-});
-
-
 document.addEventListener("DOMContentLoaded", () => {
+  // Set today's date
   document.getElementById("invoice-date").value = new Date().toISOString().split("T")[0];
 
+  // Add new row
   document.getElementById("add-row").addEventListener("click", () => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -73,11 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTotals();
   });
 
+  // Update when inputs change
   document.getElementById("invoice-rows").addEventListener("input", updateTotals);
   document.getElementById("currency").addEventListener("change", updateTotals);
   document.getElementById("tax-rate").addEventListener("input", updateTotals);
   document.getElementById("discount-rate").addEventListener("input", updateTotals);
 
+  // Logo upload
   document.getElementById("logo-input").addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -91,26 +62,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  document.getElementById("download-btn").addEventListener("click", () => {
+  // Download as PDF
+  document.getElementById("download-btn").addEventListener("click", async () => {
+    const hiddenElements = document.querySelectorAll(".no-print");
+    hiddenElements.forEach(el => el.style.display = "none");
+
     const printArea = document.querySelector(".invoice-container");
 
-    html2canvas(printArea, {
+    const canvas = await html2canvas(printArea, {
       scale: 3,
       useCORS: true,
       backgroundColor: "#ffffff",
       scrollY: -window.scrollY
-    }).then(canvas => {
-      const imgData = canvas.toDataURL("image/png");
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF("p", "pt", "a4");
-
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      pdf.addImage(imgData, "PNG", 20, 20, pdfWidth - 40, pdfHeight);
-      const filename = `invoice-${document.getElementById("invoice-number").value || "001"}.pdf`;
-      pdf.save(filename);
     });
+
+    const imgData = canvas.toDataURL("image/png");
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF("p", "pt", "a4");
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 20, 20, pdfWidth - 40, pdfHeight);
+    const filename = `invoice-${document.getElementById("invoice-number").value || "001"}.pdf`;
+    pdf.save(filename);
+
+    hiddenElements.forEach(el => el.style.display = "");
   });
 
   updateTotals();
