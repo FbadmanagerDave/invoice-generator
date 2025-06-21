@@ -204,6 +204,14 @@ body {
     text-align: left;
   }
 
+  /* === FIX INPUT CROPPING === */
+input[type="number"],
+input[type="text"],
+select {
+  box-sizing: border-box;
+}
+
+  
   .invoice-meta {
     text-align: left;
   }
