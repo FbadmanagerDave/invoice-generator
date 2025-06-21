@@ -8,15 +8,14 @@
 </head>
 <body>
   <div class="invoice-container">
-    <!-- Header: Logo + Company Info + Invoice Meta -->
+    <!-- Header -->
     <header class="invoice-header">
       <div class="left-header">
-       <div class="logo-upload no-print">
-        <label for="logo-input" class="upload-label">Upload Logo</label>
+        <div class="logo-upload no-print">
+          <label for="logo-input" class="upload-label">Upload Logo</label>
           <input type="file" id="logo-input" accept="image/*" />
-          </div>
-          <img id="logo-preview" src="" alt="Logo Preview" />
         </div>
+        <img id="logo-preview" src="" alt="Logo Preview" class="logo-preview" />
         <div class="company-details" contenteditable="true">
           <h2>Your Company</h2>
           <p>Your Street Address<br>Your City, ZIP<br>Phone | Email</p>
@@ -44,7 +43,7 @@
       </div>
     </header>
 
-    <!-- Bill To & From -->
+    <!-- Addresses -->
     <section class="invoice-addresses">
       <div>
         <label>Bill From</label>
@@ -76,7 +75,7 @@
           </tr>
         </tbody>
       </table>
-      <button id="add-row">+ Add Line</button>
+      <button id="add-row" class="no-print">+ Add Line</button>
     </section>
 
     <!-- Notes & Totals -->
@@ -85,29 +84,23 @@
         <label>Notes</label>
         <textarea id="notes" placeholder="Thank you for your business."></textarea>
       </div>
-      <table class="invoice-totals">
-        <tr>
-          <td>Subtotal:</td>
-          <td id="subtotal">$100.00</td>
-        </tr>
-        <tr>
-          <td>Tax (%):</td>
-          <td><input type="number" id="tax-rate" value="0" min="0" max="100" /></td>
-        </tr>
-        <tr>
-          <td>Discount (%):</td>
-          <td><input type="number" id="discount-rate" value="0" min="0" max="100" /></td>
-        </tr>
-        <tr>
-          <td>Total:</td>
-          <td id="total">$100.00</td>
-        </tr>
-      </table>
-      <button id="download-btn" class="no-print">Download PDF</button>
+      <div class="invoice-totals-box">
+        <div class="invoice-totals-row"><span>Subtotal:</span><span id="subtotal">$100.00</span></div>
+        <div class="invoice-totals-row">
+          <label>Tax (%):</label><input type="number" id="tax-rate" value="0" min="0" max="100" />
+        </div>
+        <div class="invoice-totals-row">
+          <label>Discount (%):</label><input type="number" id="discount-rate" value="0" min="0" max="100" />
+        </div>
+        <div class="invoice-totals-row total">
+          <span>Total:</span><span id="total">$100.00</span>
+        </div>
+        <button id="download-btn" class="no-print">Download PDF</button>
+      </div>
     </section>
   </div>
 
-  <!-- JS Scripts -->
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="script.js"></script>
