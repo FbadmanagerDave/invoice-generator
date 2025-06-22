@@ -29,11 +29,14 @@ body {
   max-height: 80px;
   max-width: 200px;
   object-fit: contain;
-  border: 1px solid #ccc;
   padding: 5px;
   background: #fff;
   border-radius: 4px;
   margin-top: 10px;
+  display: block;
+}
+.no-print .logo-preview {
+  border: 1px solid #ccc;
 }
 
 /* === HEADER === */
@@ -184,6 +187,8 @@ body {
 }
 .invoice-totals-row input {
   width: 100px;
+  height: 40px;                /* Ensures enough vertical space */
+  line-height: 1.4;            /* Slightly taller line spacing */
   padding: 10px 12px;
   font-size: 16px;
   border: 1px solid #ccc;
